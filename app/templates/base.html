@@ -1,0 +1,16 @@
+<!doctype html>
+<html>
+    <head>
+        {% if title %}
+        <title>{{ title }} - DG Putter Pro</title>
+        {% else %}
+        <title>Welcome to DG Putter Pro</title>
+        {% endif %}
+    </head>
+    <body>
+        <div>DG Putter Pro - <a href="/index">Home</a></div>
+    <hr>
+    {% block content %}{% endblock %}
+    </body>
+
+</html>

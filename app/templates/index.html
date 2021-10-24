@@ -1,15 +1,6 @@
-<!doctype html>
-<html>
-    <head>
-        {% if title %}
-        <title>{{ title }} - DG Putter Pro</title>
-        {% else %}
-        <title>Welcome to DG Putter Pro</title>
-        {% endif %}
-    </head>
-    <body>
-        <h1>Hello, {{ user.username }}!</h1>
-        <p>ready to bang some chains?</p>
-    </body>
+{% extends "base.html" %}
 
-</html>
+{% block content %}
+    <h1>Hi, {{ user.username}}</h1>
+    <p>ready to bang some chains?</p>
+{% endblock %}
