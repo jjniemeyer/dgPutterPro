@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>What is your current putting practice goal?</h1>
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <div>
+           {{ form.current_goal.label }} <br>
+           {{ form.current_goal(cols=50, rows=4) }}
+           {% for error in form.current_goal.errors %}
+           <span style="color: red;">[{{ error }}]</span>
+           {% endfor %}
+        </div>
+        <div>{{ form.submit() }}</div>
+    </form>
+{% endblock %}
