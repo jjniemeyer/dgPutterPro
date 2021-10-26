@@ -1,9 +1,18 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm, EditGoalForm
 from app.models import User
 from werkzeug.urls import url_parse
+from datetime import datetime
+
+
+@app.before_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.utcnow()
+        db.session.commit()
+
 
 @app.route('/')
 @app.route('/index')
@@ -49,3 +58,28 @@ def register():
         flash('Congratulations! you are now a registerd user. Lets make some putts!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    drills = [
+        {'user': user, 'number_putts_made': 15, 'number_attempts': 20, 'putt_distance': 20},
+        {'user': user, 'number_putts_made': 12, 'number_attempts': 20, 'putt_distance': 24}
+    ]
+    return render_template('user.html', user=user, drills=drills)
+
+
+@app.route('/edit_goal', methods=['GET', 'POST'])
+@login_required
+def edit_goal():
+    form = EditGoalForm()
+    if form.validate_on_submit():
+        current_user.current_goal = form.current_goal.data
+        db.session.commit()
+        flash("Your changes have been saved.")
+        return redirect(url_for('edit_goal'))
+    elif request.method == 'GET':
+        form.current_goal.data = current_user.current_goal
+    return render_template('edit_goal.html', title='Edit Goal', form=form)
