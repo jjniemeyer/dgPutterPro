@@ -2,6 +2,8 @@
 
 {% block content %}
     <h1>User: {{ user.username }}</h1>
+    {% if user.current_goal %}<p>Current Goal: {{ user.current_goal }}</p>{% endif %}
+    {% if user.last_seen %}<p>Last Seen on: {{ user.last_seen }}</p>{% endif %}
     <hr>
     {% for drill in drills %}
         {% include '_drill.html' %}
