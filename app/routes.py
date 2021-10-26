@@ -49,3 +49,14 @@ def register():
         flash('Congratulations! you are now a registerd user. Lets make some putts!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
+
+
+@app.route('/user/<username>')
+@login_required
+def user(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    drills = [
+        {'user': user, 'number_putts_made': 15, 'number_attempts': 20, 'putt_distance': 20},
+        {'user': user, 'number_putts_made': 12, 'number_attempts': 20, 'putt_distance': 24}
+    ]
+    return render_template('user.html', user=user, drills=drills)
