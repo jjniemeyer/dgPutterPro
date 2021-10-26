@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>User: {{ user.username }}</h1>
+    <hr>
+    {% for drill in drills %}
+    <p>
+        {{ drill.user.username }} made {{ drill.number_putts_made }} out of {{ drill.number_attempts }} putts
+        from {{ drill.putt_distance }} feet - That's {{ drill.number_putts_made / drill.number_attempts * 100 }}% !
+    </p>
+    {% endfor %}
+{% endblock %}
