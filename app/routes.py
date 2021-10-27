@@ -1,8 +1,8 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditGoalForm
-from app.models import User
+from app.forms import LoginForm, RegistrationForm, EditGoalForm, DrillForm
+from app.models import User, Drill
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -14,11 +14,20 @@ def before_request():
         db.session.commit()
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['GET', 'POST'])
+@app.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
-    return render_template('index.html', title='Home')
+    form = DrillForm()
+    if form.validate_on_submit():
+        drill = Drill(putt_distance=form.putt_distance.data, number_attempts=form.number_attempts.data,
+                      number_putts_made=form.number_putts_made.data, user=current_user)
+        db.session.add(drill)
+        db.session.commit()
+        flash('You drill has been recorded!')
+        return redirect(url_for('index'))
+    drills = current_user.drills.all()
+    return render_template('index.html', title='Home', form=form, drills=drills)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -64,10 +73,7 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    drills = [
-        {'user': user, 'number_putts_made': 15, 'number_attempts': 20, 'putt_distance': 20},
-        {'user': user, 'number_putts_made': 12, 'number_attempts': 20, 'putt_distance': 24}
-    ]
+    drills = user.drills.order_by(Drill.timestamp.desc())
     return render_template('user.html', user=user, drills=drills)
 
 
