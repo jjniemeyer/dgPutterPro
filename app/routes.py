@@ -85,7 +85,7 @@ def edit_goal():
         current_user.current_goal = form.current_goal.data
         db.session.commit()
         flash("Your changes have been saved.")
-        return redirect(url_for('edit_goal'))
+        return redirect(url_for('index'))
     elif request.method == 'GET':
         form.current_goal.data = current_user.current_goal
     return render_template('edit_goal.html', title='Edit Goal', form=form)
