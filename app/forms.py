@@ -47,3 +47,15 @@ class DrillForm(FlaskForm):
     def validate_putts_made(self, number_putts_made, number_attempts):
         if number_putts_made.data > number_attempts.data:
             raise ValidationEror("The number of putts made must be less than or equal to the number attempted")
+
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Pasword Reset')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Request Password Reset')
