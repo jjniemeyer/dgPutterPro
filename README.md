@@ -19,7 +19,7 @@ To run it locally:
 4. display putting drills on user page
     
 
-### TODO to get to version 1.0
+### TODO to get to version 0.1
 
 [ ] - email support for password reset
 
