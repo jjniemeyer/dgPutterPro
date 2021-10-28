@@ -22,14 +22,25 @@ To run it locally:
 ### TODO to get to version 1.0
 
 [ ] - email support for password reset
+
 [ ] - logging
+
 [ ] - testing
+
 [ ] - refactor to use blueprints and app factory pattern
+
 [ ] - stylesheets
+
 [ ] - visualizations for user progress
+
 [ ] - Containerization
+
     [ ] - Dockerize this app
+
     [ ] - provision and persist MySQL container
+
 [ ] - Deployment
+
     [ ] - decide where? (AWS, Google cloud, or Linode)
+
     [ ] - set up a CI/CD workflow
