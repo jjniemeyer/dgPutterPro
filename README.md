@@ -23,6 +23,8 @@ To run it locally:
 
 [ ] - email support for password reset
 
+[ ] -prettify datetimes and handle timezones (flask-moment)
+
 [x] - logging
 
 [ ] - testing
