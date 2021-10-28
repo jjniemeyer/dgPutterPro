@@ -9,13 +9,13 @@ from logging.handlers import SMTPHandler, RotatingFileHandler
 import os
 
 
-
 app = Flask(__name__, static_url_path='/static')
 app.config.from_object(Config)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 login = LoginManager(app)
 login.login_view = 'login'
+mail = Mail(app)
 
 if not app.debug:
     # email loggin
