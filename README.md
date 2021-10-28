@@ -23,7 +23,7 @@ To run it locally:
 
 [ ] - email support for password reset
 
-[ ] - logging
+[x] - logging
 
 [ ] - testing
 
