@@ -4,8 +4,8 @@ Disc Golf Putting practice app written in python using Flask
 
 This app is not currently deployed anywhere. 
 To run it locally:
-1. clone this repo and navigate that directory
-2. create virtual environment `python3 venv venv`
+1. clone this repo and navigate to that directory
+2. create a virtual environment `python3 -m venv venv`
 3. Install requirements `pip install -r requirements.txt`
 4. run the app on localhost port 5000 `flask run`
 5. point browser to `http://localhost:5000`
