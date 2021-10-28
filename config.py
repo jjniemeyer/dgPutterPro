@@ -12,4 +12,4 @@ class Config(object):
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS')
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
-    ADMINS = ['jani5714@colorado.edu']
+    ADMINS = ['jani5714@colorado.edu', 'fake.app.real.server@gmail.com']
