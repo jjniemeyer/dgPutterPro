@@ -1,8 +1,9 @@
 from flask import render_template, flash, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditGoalForm, DrillForm
+from app.forms import LoginForm, RegistrationForm, EditGoalForm, DrillForm, ResetPasswordRequestForm
 from app.models import User, Drill
+from app.email import send_password_reset_email
 from werkzeug.urls import url_parse
 from datetime import datetime
 
@@ -89,3 +90,19 @@ def edit_goal():
     elif request.method == 'GET':
         form.current_goal.data = current_user.current_goal
     return render_template('edit_goal.html', title='Edit Goal', form=form)
+
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(email=form.email.data).first()
+        if user:
+            send_password_reset_email(user)
+        # message flashed regardless of valid email address
+        # to prevent clients from seeing if user is a member or not via this form
+        flash('check your email for instructions on resetting your password.')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html', title='Reset Password', form=form)
