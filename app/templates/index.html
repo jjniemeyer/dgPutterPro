@@ -1,31 +1,12 @@
 {% extends "base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block app_content %}
     <h1>Hi, {{ current_user.username}}</h1>
     <p>ready to start another drill?</p>
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.putt_distance(size=4) }}
-            {{ form.putt_distance.label }}
-            {% for error in form.putt_distance.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.number_attempts(size=4) }}
-            {{ form.number_attempts.label }}
-            {% for error in form.number_attempts.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.number_putts_made(size=4) }}
-            {{ form.number_putts_made.label }}
-            {% for error in form.number_putts_made.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+    <div class="row">
+        <div class="col-md-4">
+            {{ wtf.quick_form(form) }}
+        </div>
+    </div>
 {% endblock %}
