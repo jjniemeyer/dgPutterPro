@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_mail import Mail
-from flask_moment import Moment
+# from flask_moment import Moment
 from config import Config
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
