@@ -13,4 +13,10 @@
     {% for drill in drills %}
         {% include '_drill.html' %}
     {% endfor %}
+    {% if prev_url %}
+    <a href="{{ prev_url }}">Newer drills</a>
+    {% endif %}
+    {% if next_url %}
+    <a href="{{ next_url }}">Older drills</a>
+    {% endif %}
 {% endblock %}

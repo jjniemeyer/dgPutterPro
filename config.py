@@ -13,3 +13,4 @@ class Config(object):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['jani5714@colorado.edu', 'fake.app.real.server@gmail.com']
+    DRILLS_PER_PAGE = 10

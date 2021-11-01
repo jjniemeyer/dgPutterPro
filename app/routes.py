@@ -75,8 +75,13 @@ def register():
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
-    drills = user.drills.order_by(Drill.timestamp.desc())
-    return render_template('user.html', user=user, drills=drills)
+    page = request.args.get('page', 1, type=int)
+    drills = user.drills.order_by(Drill.timestamp.desc()).paginate(page, app.config['DRILLS_PER_PAGE'], False)
+    next_url = url_for('user', username=user.username, page=drills.next_num) \
+        if drills.has_next else None
+    prev_url = url_for('user', username=user.username, page=drills.prev_num) \
+        if drills.has_prev else None
+    return render_template('user.html', user=user, drills=drills.items, next_url=next_url, prev_url=prev_url)
 
 
 @app.route('/edit_goal', methods=['GET', 'POST'])
