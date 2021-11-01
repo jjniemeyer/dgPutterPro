@@ -21,9 +21,9 @@ To run it locally:
 
 ### TODO to get to version 0.1
 
-[x] - email support for password reset
+[ ] - email support for password reset
 
-[x] -prettify datetimes and handle timezones (flask-moment)
+[ ] -prettify datetimes and handle timezones (flask-moment)
 
 [x] - logging
 
@@ -31,7 +31,7 @@ To run it locally:
 
 [ ] - refactor to use blueprints and app factory pattern
 
-[x] - stylesheets
+[ ] - stylesheets
 
 [ ] - visualizations for user progress
 
