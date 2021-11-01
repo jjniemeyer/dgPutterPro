@@ -21,9 +21,9 @@ To run it locally:
 
 ### TODO to get to version 0.1
 
-[ ] - email support for password reset
+[x] - email support for password reset
 
-[ ] -prettify datetimes and handle timezones (flask-moment)
+[x] -prettify datetimes and handle timezones (flask-moment)
 
 [x] - logging
 
