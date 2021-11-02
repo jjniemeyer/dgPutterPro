@@ -29,9 +29,9 @@ To run it locally:
 
 [ ] - testing
 
-[ ] - refactor to use blueprints and app factory pattern
+[x] - refactor to use blueprints and app factory pattern
 
-[ ] - stylesheets
+[x] - styles
 
 [ ] - visualizations for user progress
 
