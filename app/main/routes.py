@@ -1,23 +1,22 @@
-from flask import render_template, flash, redirect, url_for, request
-from flask_login import current_user, login_user, logout_user, login_required
-from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditGoalForm, DrillForm, \
-    ResetPasswordRequestForm, ResetPasswordForm
-from app.models import User, Drill
-from app.email import send_password_reset_email
-from werkzeug.urls import url_parse
 from datetime import datetime
+from flask import render_template, flash, redirect, url_for, request
+from flask_login import current_user, login_required
+from app import db
+from app.main.forms import EditGoalForm, DrillForm
+from app.models import User, Drill
+from app.main import bp
 
 
-@app.before_request
+
+@bp.before_request
 def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
 
-@app.route('/', methods=['GET', 'POST'])
-@app.route('/index', methods=['GET', 'POST'])
+@bp.route('/', methods=['GET', 'POST'])
+@bp.route('/index', methods=['GET', 'POST'])
 @login_required
 def index():
     form = DrillForm()
@@ -27,27 +26,25 @@ def index():
         db.session.add(drill)
         db.session.commit()
         flash('You drill has been recorded!')
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     drills = current_user.drills.all()
     return render_template('index.html', title='Home', form=form, drills=drills)
 
 
-
-
-@app.route('/user/<username>')
+@bp.route('/user/<username>')
 @login_required
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     drills = user.drills.order_by(Drill.timestamp.desc()).paginate(page, app.config['DRILLS_PER_PAGE'], False)
-    next_url = url_for('user', username=user.username, page=drills.next_num) \
+    next_url = url_for('main.user', username=user.username, page=drills.next_num) \
         if drills.has_next else None
-    prev_url = url_for('user', username=user.username, page=drills.prev_num) \
+    prev_url = url_for('main.user', username=user.username, page=drills.prev_num) \
         if drills.has_prev else None
     return render_template('user.html', user=user, drills=drills.items, next_url=next_url, prev_url=prev_url)
 
 
-@app.route('/edit_goal', methods=['GET', 'POST'])
+@bp.route('/edit_goal', methods=['GET', 'POST'])
 @login_required
 def edit_goal():
     form = EditGoalForm()
@@ -55,7 +52,7 @@ def edit_goal():
         current_user.current_goal = form.current_goal.data
         db.session.commit()
         flash("Your changes have been saved.")
-        return redirect(url_for('index'))
+        return redirect(url_for('main.index'))
     elif request.method == 'GET':
         form.current_goal.data = current_user.current_goal
     return render_template('edit_goal.html', title='Edit Goal', form=form)
