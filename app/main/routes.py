@@ -1,5 +1,5 @@
 from datetime import datetime
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_required
 from app import db
 from app.main.forms import EditGoalForm, DrillForm
@@ -8,7 +8,7 @@ from app.main import bp
 
 
 
-@bp.before_request
+@bp.before_app_request
 def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.utcnow()
@@ -36,7 +36,7 @@ def index():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
-    drills = user.drills.order_by(Drill.timestamp.desc()).paginate(page, app.config['DRILLS_PER_PAGE'], False)
+    drills = user.drills.order_by(Drill.timestamp.desc()).paginate(page, current_app.config['DRILLS_PER_PAGE'], False)
     next_url = url_for('main.user', username=user.username, page=drills.next_num) \
         if drills.has_next else None
     prev_url = url_for('main.user', username=user.username, page=drills.prev_num) \
@@ -52,7 +52,7 @@ def edit_goal():
         current_user.current_goal = form.current_goal.data
         db.session.commit()
         flash("Your changes have been saved.")
-        return redirect(url_for('main.index'))
+        return redirect(url_for('main.edit_goal'))
     elif request.method == 'GET':
         form.current_goal.data = current_user.current_goal
     return render_template('edit_goal.html', title='Edit Goal', form=form)
