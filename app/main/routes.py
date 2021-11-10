@@ -37,13 +37,18 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     page = request.args.get('page', 1, type=int)
     drills = user.drills.order_by(Drill.timestamp.desc()).paginate(page, current_app.config['DRILLS_PER_PAGE'], False)
-    summary = user.drills.group_by(Drill.putt_distance)
     next_url = url_for('main.user', username=user.username, page=drills.next_num) \
         if drills.has_next else None
     prev_url = url_for('main.user', username=user.username, page=drills.prev_num) \
         if drills.has_prev else None
-    return render_template('user.html', user=user, drills=drills.items, summary=summary, next_url=next_url, prev_url=prev_url)
+    return render_template('user.html', user=user, drills=drills.items, next_url=next_url, prev_url=prev_url)
 
+@bp.route('/user/<username>/stats')
+@login_required
+def stats(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    summary = user.drills.group_by(Drill.putt_distance)
+    return render_template('stats.html', user=user, summary=summary)
 
 @bp.route('/edit_goal', methods=['GET', 'POST'])
 @login_required
