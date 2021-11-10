@@ -9,6 +9,18 @@
     {% if user == current_user %}
         <p><a href="{{ url_for('main.edit_goal') }}">Set New Goal</a> </p>
     {% endif %}
+
+    <hr>
+    {% for sum in summary %}
+        <table class="table table-hover">
+        <tr valign="top">
+            <td>
+                {{ sum.number_putts_made }} out of {{ sum.number_attempts }} from {{ sum.putt_distance }} feet
+                - {{ (sum.number_putts_made / sum.number_attempts * 100) |round|int}}% all time
+            </td>
+            </tr>
+        </table>
+    {% endfor %}
     <hr>
     {% for drill in drills %}
         {% include '_drill.html' %}
