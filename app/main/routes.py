@@ -8,6 +8,7 @@ from app.main import bp
 
 
 
+
 @bp.before_app_request
 def before_request():
     if current_user.is_authenticated:
@@ -43,6 +44,12 @@ def user(username):
         if drills.has_prev else None
     return render_template('user.html', user=user, drills=drills.items, next_url=next_url, prev_url=prev_url)
 
+@bp.route('/user/<username>/stats')
+@login_required
+def stats(username):
+    user = User.query.filter_by(username=username).first_or_404()
+    summary = user.drills.group_by(Drill.putt_distance)
+    return render_template('stats.html', user=user, summary=summary)
 
 @bp.route('/edit_goal', methods=['GET', 'POST'])
 @login_required
