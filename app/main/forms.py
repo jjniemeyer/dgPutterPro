@@ -20,12 +20,13 @@ class DrillForm(FlaskForm):
                                                message="you must attempt a positive number of putts")])
     # TODO fix this validator
     number_putts_made = IntegerField('putts made', validators=[DataRequired(),
-                                                               NumberRange(min=0,
-                                                               message="you can not make more putts than you attempt")])
+                                                               NumberRange(min=0, max=None)])
+
     submit = SubmitField('Submit')
 
     def validate_putts_made(self):
-        pass
+        if self.number_putts_made > self.number_attempts:
+            raise ValidationError("You can not make more putts than you attempted")
 
 
 
