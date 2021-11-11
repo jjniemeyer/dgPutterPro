@@ -1,10 +1,11 @@
-from datetime import datetime, date
+from datetime import datetime
 from flask import render_template, flash, redirect, url_for, request, current_app
 from flask_login import current_user, login_required
 from app import db
 from app.main.forms import EditGoalForm, DrillForm
 from app.models import User, Drill
 from app.main import bp
+
 
 
 

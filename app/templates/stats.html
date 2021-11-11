@@ -2,14 +2,29 @@
 
 {% block app_content %}
     <h1>Stats Summary</h1>
-    {% for sum in summary %}
             <table class="table table-hover">
-            <tr valign="top">
-                <td>
-                    {{ sum.number_putts_made }} out of {{ sum.number_attempts }} from {{ sum.putt_distance }} feet
-                    - {{ (sum.number_putts_made / sum.number_attempts * 100) |round|int}}% all time
-                </td>
+                <tr valign="top">
+                   <td>Distance</td>
+                   <td>Percentage</td>
+                   <td>Putts Made</td>
+                   <td>Putts Attempted</td>
                 </tr>
+            {% for sum in summary %}
+                <tr>
+                    <td>
+                        {{sum.putt_distance}} feet
+                    </td>
+                    <td>
+                        {{ (sum.number_putts_made / sum.number_attempts * 100) |round|int}}%
+                    </td>
+                    <td>
+                        {{ sum.number_putts_made }}
+                    </td>
+                    <td>
+                        {{ sum.number_attempts }}
+                    </td>
+                </tr>
+            {% endfor %}
             </table>
-    {% endfor %}
+
 {% endblock %}
