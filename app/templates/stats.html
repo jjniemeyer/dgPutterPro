@@ -2,6 +2,9 @@
 
 {% block app_content %}
     <h1>Stats Summary</h1>
+    {% for total in totals %}
+    <div>{{ total[0] }} putts made out of {{ total[1] }} attempted</div>
+    {% endfor %}
             <table class="table table-hover">
                 <tr valign="top">
                    <td style="font-weight: bold;">Distance</td>
