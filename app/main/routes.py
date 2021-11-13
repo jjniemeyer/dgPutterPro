@@ -5,6 +5,7 @@ from app import db
 from app.main.forms import EditGoalForm, DrillForm
 from app.models import User, Drill
 from app.main import bp
+from sqlalchemy import text
 
 
 
@@ -48,8 +49,21 @@ def user(username):
 @login_required
 def stats(username):
     user = User.query.filter_by(username=username).first_or_404()
-    summary = user.drills.group_by(Drill.putt_distance)
-    return render_template('stats.html', user=user, summary=summary)
+    # there must be a way to do this with the ORM but raw sql is working for now
+    # summary is a tuple not a query object
+    raw_sql = text("""
+        SELECT Drill.putt_distance, SUM(Drill.number_putts_made) as putts_made, 
+        SUM(Drill.number_attempts) as attempted FROM User Join Drill ON User.id=Drill.user_id 
+        WHERE User.username=='{}' GROUP BY Drill.putt_distance ORDER BY Drill.putt_distance
+        """.format(user.username))
+    summary = db.engine.execute(raw_sql)
+    raw_sql_2 = text(""" 
+    SELECT SUM(putts_made), SUM(attempted) FROM (SELECT Drill.putt_distance, SUM(Drill.number_putts_made) as putts_made, 
+        SUM(Drill.number_attempts) as attempted FROM User Join Drill ON User.id=Drill.user_id 
+        WHERE User.username=='{}' GROUP BY Drill.putt_distance ORDER BY Drill.putt_distance)
+    """.format(user.username))
+    totals = db.engine.execute(raw_sql_2)
+    return render_template('stats.html', user=user, summary=summary, totals=totals)
 
 @bp.route('/edit_goal', methods=['GET', 'POST'])
 @login_required
