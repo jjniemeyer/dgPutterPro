@@ -12,16 +12,16 @@
             {% for sum in summary %}
                 <tr>
                     <td>
-                        {{sum.putt_distance}} feet
+                        {{ sum[0] }} feet
                     </td>
                     <td>
-                        {{ (sum.number_putts_made / sum.number_attempts * 100) |round|int}}%
+                        {{ (sum[1] / sum[2] * 100) |round|int}}%
                     </td>
                     <td>
-                        {{ sum.number_putts_made }}
+                        {{ sum[1] }}
                     </td>
                     <td>
-                        {{ sum.number_attempts }}
+                        {{ sum[2] }}
                     </td>
                 </tr>
             {% endfor %}
