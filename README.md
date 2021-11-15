@@ -19,6 +19,7 @@ To run it locally:
 2. login user
 3. allow user to record putting drill
 4. display putting drills on user page
+5. crude stats summary page
     
 
 ### TODO to get to version 0.1
