@@ -3,7 +3,7 @@
 {% block app_content %}
     <h1>Stats Summary</h1>
     {% for total in totals %}
-    <div>{{ total[0] }} putts made out of {{ total[1] }} attempted</div>
+    <div>{{ total[0] }} putts made out of {{ total[1] }} attempted {{ (total[0]/total[1]*100) |round|int}}% all time</div>
     {% endfor %}
             <table class="table table-hover">
                 <tr valign="top">
