@@ -54,12 +54,6 @@ def stats(username):
                                   func.sum(Drill.number_attempts))\
             .group_by(Drill.putt_distance).where(Drill.user_id == user.id).all()
     # summary is a tuple not a query object
-    raw_sql = text("""
-        SELECT Drill.putt_distance, SUM(Drill.number_putts_made) as putts_made, 
-        SUM(Drill.number_attempts) as attempted FROM User Join Drill ON User.id=Drill.user_id 
-        WHERE User.username=='{}' GROUP BY Drill.putt_distance ORDER BY Drill.putt_distance
-        """.format(user.username))
-    summary = db.engine.execute(raw_sql)
     raw_sql_2 = text(""" 
     SELECT SUM(putts_made), SUM(attempted) FROM (SELECT Drill.putt_distance, SUM(Drill.number_putts_made) as putts_made, 
         SUM(Drill.number_attempts) as attempted FROM User Join Drill ON User.id=Drill.user_id 
