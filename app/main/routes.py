@@ -5,7 +5,7 @@ from app import db
 from app.main.forms import EditGoalForm, DrillForm
 from app.models import User, Drill
 from app.main import bp
-from sqlalchemy import text
+from sqlalchemy import text, func
 
 
 
@@ -49,7 +49,10 @@ def user(username):
 @login_required
 def stats(username):
     user = User.query.filter_by(username=username).first_or_404()
-    # there must be a way to do this with the ORM but raw sql is working for now
+    summary = \
+        Drill.query.with_entities(Drill.putt_distance, func.sum(Drill.number_putts_made),
+                                  func.sum(Drill.number_attempts))\
+            .group_by(Drill.putt_distance).where(Drill.user_id == user.id).all()
     # summary is a tuple not a query object
     raw_sql = text("""
         SELECT Drill.putt_distance, SUM(Drill.number_putts_made) as putts_made, 
