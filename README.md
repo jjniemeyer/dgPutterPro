@@ -17,12 +17,16 @@ To run it locally:
 0. basic database models for User and putting Drill
 1. register user
 2. login user
-3. allow user to record putting drill
-4. display putting drills on user page
-5. crude stats summary page
+3. send reset user password email
+4. reset user password
+5. logging to file
+6. sending logs to email
+7. allow user to record putting drill
+8. display putting drills on user page
+9. crude stats summary page
     
 
-### TODO to get to version 0.1
+### TODO to get to version 0.0.0.0.0.0.0.1
 
 [x] - email support for password reset
 
@@ -36,16 +40,14 @@ To run it locally:
 
 [x] - styles
 
+[ ] - expose API
+
 [ ] - visualizations for user progress
+
+[ ] - provision a real DB
 
 [ ] - Containerization
 
-    [ ] - Dockerize this app
-
-    [ ] - provision and persist MySQL container
-
 [ ] - Deployment
 
-    [ ] - decide where? (AWS, Google cloud, or Linode)
-
-    [ ] - set up a CI/CD workflow
+  
