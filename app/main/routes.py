@@ -5,7 +5,7 @@ from app import db
 from app.main.forms import EditGoalForm, DrillForm
 from app.models import User, Drill
 from app.main import bp
-from sqlalchemy import text
+from sqlalchemy import text, func
 
 
 
@@ -49,20 +49,15 @@ def user(username):
 @login_required
 def stats(username):
     user = User.query.filter_by(username=username).first_or_404()
-    # there must be a way to do this with the ORM but raw sql is working for now
-    # summary is a tuple not a query object
-    raw_sql = text("""
-        SELECT Drill.putt_distance, SUM(Drill.number_putts_made) as putts_made, 
-        SUM(Drill.number_attempts) as attempted FROM User Join Drill ON User.id=Drill.user_id 
-        WHERE User.username=='{}' GROUP BY Drill.putt_distance ORDER BY Drill.putt_distance
-        """.format(user.username))
-    summary = db.engine.execute(raw_sql)
-    raw_sql_2 = text(""" 
-    SELECT SUM(putts_made), SUM(attempted) FROM (SELECT Drill.putt_distance, SUM(Drill.number_putts_made) as putts_made, 
-        SUM(Drill.number_attempts) as attempted FROM User Join Drill ON User.id=Drill.user_id 
-        WHERE User.username=='{}' GROUP BY Drill.putt_distance ORDER BY Drill.putt_distance)
-    """.format(user.username))
-    totals = db.engine.execute(raw_sql_2)
+    summary = \
+        Drill.query.with_entities(Drill.putt_distance, func.sum(Drill.number_putts_made),
+                                  func.sum(Drill.number_attempts))\
+            .group_by(Drill.putt_distance).where(Drill.user_id == user.id).all()
+    totals = \
+        Drill.query.with_entities(func.sum(Drill.number_putts_made), func.sum(Drill.putt_distance))\
+            .where(Drill.user_id == user.id)
+    # summary is a list of tuples (distance, number_made, number_attempts), totals is a tuple (made, attempts)
+    # user is a user object
     return render_template('stats.html', user=user, summary=summary, totals=totals)
 
 @bp.route('/edit_goal', methods=['GET', 'POST'])
