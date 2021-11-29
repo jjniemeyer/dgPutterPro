@@ -14,12 +14,13 @@ RUN venv/bin/pip install gunicorn
 COPY app app
 COPY migrations migrations
 COPY dgputterpro.py config.py boot.sh ./
-RUN chmod +x boot.sh
+RUN chmod a+x boot.sh
 
-ENV FLASK_APP = dgputterpro.py
+ENV FLASK_APP dgputterpro.py
 
 RUN chown -R dgputterpro:dgputterpro ./
 USER dgputterpro
 
 EXPOSE 5000
 ENTRYPOINT ["./boot.sh"]
+
