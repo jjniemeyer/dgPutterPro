@@ -1,6 +1,6 @@
 services:
   app:
-    image: dgputterpro:latest
+    build: .
     ports:
       - 8000:5000
     working_dir: /app
@@ -10,7 +10,9 @@ services:
   database:
     container_name: postgres
     image: postgres:latest
-    env_file: .env
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: dgputterpro
     ports:
       - 5432:5432
     volumes:

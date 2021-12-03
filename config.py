@@ -5,12 +5,7 @@ load_dotenv(os.path.join(basedir,  '.env'))
 
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
-    DATABASE_URL = 'postgres+psycopg2://{user}:{pwd}@{url}/{db}'.format(
-        user=os.environ.get('POSTGRES_USER'),
-        pwd=os.environ.get('POSTGRES_PWD'),
-        url=os.environ.get('POSTGRES_URL'),
-        db=os.environ.get('POSTGRES_DB'),
-    )
+    DATABASE_URL = 'postgres+psycopg2://postgres:admin@database/dgputterpro'
     SQLALCHEMY_DATABASE_URI = DATABASE_URL or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
