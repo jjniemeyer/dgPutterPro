@@ -16,7 +16,8 @@ This app is not currently deployed anywhere.
 
 ### stop containers
 
-`docker-compose down` or `docker-compose down -v` for verbose output
+`docker-compose down` or `docker-compose down -v` to remove named volumes also.
+
 
 
 ### What's currently working
