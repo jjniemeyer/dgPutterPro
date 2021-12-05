@@ -22,7 +22,7 @@ class DrillForm(FlaskForm):
                                    validators=[DataRequired(),
                                                NumberRange(min=1,
                                                message="you must attempt a positive number of putts")])
-    # TODO fix this validator
+
     number_putts_made = IntegerField('putts made', validators=[DataRequired(),
                                                                NumberRange(min=0, max=None), validate_putts_made])
 

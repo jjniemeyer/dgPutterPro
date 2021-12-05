@@ -1,0 +1,11 @@
+logs/
+venv/
+.env
+.flaskenv
+.gitignore
+*.md
+.git/
+.idea/
+__pycache__/
+tests.py
+app.db

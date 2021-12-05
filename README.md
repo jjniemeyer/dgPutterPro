@@ -3,15 +3,21 @@
 Disc Golf Putting practice app written in python using Flask
 
 This app is not currently deployed anywhere. 
-To run it locally:
+### To work on it locally:
 1. clone this repo and navigate to that directory
 2. create a virtual environment `python3.10 -m venv venv`
 3. activate virtual environment `source venv/bin/activate`
 4. upgrade pip inside active venv `python -m pip install --upgrade pip`
 5. Prior to installing requirements install wheel `python -m pip install wheel`
 6. Install requirements `python -m pip install -r requirements.txt`
-7. run the app on localhost port 5000 `flask run`
-8. point browser to `http://localhost:5000`
+
+### to run locally
+`docker-compose up --build`
+
+### stop containers
+
+`docker-compose down` or `docker-compose down -v` for verbose output
+
 
 ### What's currently working
 
@@ -25,6 +31,7 @@ To run it locally:
 7. allow user to record putting drill
 8. display putting drills on user page
 9. crude stats summary page
+10. Docker 
     
 
 ### TODO to get to version 0.0.0.0.0.0.0.1
@@ -45,9 +52,9 @@ To run it locally:
 
 [ ] - visualizations for user progress
 
-[ ] - provision a real DB
+[X] - provision a real DB: postgres
 
-[ ] - Containerization
+[X] - Containerization
 
 [ ] - Deployment
 

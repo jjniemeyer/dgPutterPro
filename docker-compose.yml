@@ -1,0 +1,22 @@
+services:
+  app:
+    build: .
+    ports:
+      - 8000:5000
+    working_dir: /app
+    volumes:
+      - ./:/app
+    env_file: .env
+  database:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: dgputterpro
+    ports:
+      - 5432:5432
+    volumes:
+      - db_volume:/var/lib/postgresql
+
+volumes:
+  db_volume:
