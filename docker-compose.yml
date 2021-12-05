@@ -16,7 +16,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - db_volume:/var/lib/postgresql
+      - dgputterpro_data:/var/lib/postgresql
 
 volumes:
-  db_volume:
+  dgputterpro_data:
