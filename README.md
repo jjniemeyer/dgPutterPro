@@ -11,13 +11,13 @@ This app is not currently deployed anywhere.
 5. Prior to installing requirements install wheel `python -m pip install wheel`
 6. Install requirements `python -m pip install -r requirements.txt`
 
-### to run locally
+### To run locally
 `docker-compose up --build`
 
-### stop containers
+### Stop and remove containers
 
 `docker-compose down` or `docker-compose down -v` to remove named volumes also.
-
+in either case you will lose any saved data, so probably might as well remove the volume.
 
 
 ### What's currently working
