@@ -6,7 +6,7 @@ services:
     working_dir: /app
     volumes:
       - ./:/app
-    env_file: .app_env
+    env_file: .env
   database:
     container_name: postgres
     image: postgres:latest
