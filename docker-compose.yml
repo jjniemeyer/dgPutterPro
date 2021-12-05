@@ -2,7 +2,7 @@ services:
   app:
     build: .
     ports:
-      - 8000:8000
+      - 8000:5000
     working_dir: /app
     volumes:
       - ./:/app
@@ -16,7 +16,7 @@ services:
     ports:
       - 5432:5432
     volumes:
-      - dgputterpro_data:/var/lib/postgresql
+      - data:/var/lib/postgresql
 
 volumes:
-  dgputterpro_data:
+  data:
