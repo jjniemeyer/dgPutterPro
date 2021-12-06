@@ -9,7 +9,7 @@ Commands:
     build       Builds tagged docker image. NOTE: Tag version number required.
     deploy      Will deploy docker image to docker hub.
     destroy     Remove docker containers, network, and volumes.
-    shell       Open shell in drupal container.
+    shell       Open shell for container.
     start       Starts all container in compose file in detached mode.
     stop        Stop running containers.
     logs        Follows log from all containers.
@@ -18,7 +18,13 @@ Commands:
 
 case "$1" in
   shell)
-    docker-compose exec drupal bash
+    if [[ -z "$2" ]]
+    then
+       printf "Error: Container name required.\nTry:\n    $(basename "$0") $1 <container name>\n\n" >&2
+       echo "$USAGE"
+       exit 1
+    fi
+    docker-compose exec "$2" bash
     ;;
   build)
     if [[ -z "$2" ]]
