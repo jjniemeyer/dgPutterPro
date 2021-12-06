@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+# FIXME add the repository once we have it
+REPOSITORY=fixme_add_some_repository
+
+USAGE="$(basename "$0") {build|deploy|start|stop|destroy|logs|shell} -- Helper for commands used for running dgputterpro
+containers.
+Commands:
+    build       Builds tagged docker image. NOTE: Tag version number required.
+    deploy      Will deploy docker image to docker hub.
+    destroy     Remove docker containers, network, and volumes.
+    shell       Open shell for container.
+    start       Starts all container in compose file in detached mode.
+    stop        Stop running containers.
+    logs        Follows log from all containers.
+    info        Gives info on running containers.
+"
+
+case "$1" in
+  shell)
+    if [[ -z "$2" ]]
+    then
+       printf "Error: Container name required.\nTry:\n    $(basename "$0") $1 <container name>\n\n" >&2
+       echo "$USAGE"
+       exit 1
+    fi
+    docker-compose exec "$2" bash
+    ;;
+  build)
+    if [[ -z "$2" ]]
+    then
+       printf "Error: Version number required.\nTry:\n    $(basename "$0") $1 <version>\n\n" >&2
+       echo "$USAGE"
+       exit 1
+    fi
+    docker build -t "$REPOSITORY":"$2" -t "$REPOSITORY":latest .
+    ;;
+  push)
+    docker push "$REPOSITORY"
+    ;;
+  destroy)
+    docker-compose down -v
+    ;;
+  start)
+    docker-compose up -d
+    ;;
+  stop)
+    docker-compose stop
+    ;;
+  logs)
+    docker-compose logs -f
+    ;;
+  info)
+    docker-compose ps
+    ;;
+  *)
+    echo "$USAGE"
+    ;;
+esac
