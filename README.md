@@ -34,29 +34,4 @@ in either case you will lose any saved data, so probably might as well remove th
 9. crude stats summary page
 10. Docker 
     
-
-### TODO to get to version 0.0.0.0.0.0.0.1
-
-[x] - email support for password reset
-
-[x] -prettify datetimes and handle timezones (flask-moment)
-
-[x] - logging
-
-[ ] - testing
-
-[x] - refactor to use blueprints and app factory pattern
-
-[x] - styles
-
-[ ] - expose API
-
-[ ] - visualizations for user progress
-
-[X] - provision a real DB: postgres
-
-[X] - Containerization
-
-[ ] - Deployment
-
   
